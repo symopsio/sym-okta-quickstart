@@ -80,8 +80,8 @@ Once you've got the E2E Okta workflow implemented, here are some next steps to c
 * Update your workflow to require that users be members of a certain Okta group to approve access:
   1. Configure `flow_vars.approver_group` with the Okta group ID in [`terraform.tfvars`](app/terraform.tfvars).
   2. Uncomment the `hook` annotation on the `on_approve` method in [`impl.py`](modules/okta-access-flow/impl.py).
-     this is just one example of what you can do with [hooks in the SDK!](https://docs.symops.com/docs/handlers)
-* Manage [end-users](https://docs.symops.com/docs/manage-users). Sym tries to handle this automatically but you can use the `symflow` CLI to configure user mappings.
+     This is just one example of what you can do with [hooks in the SDK!](https://docs.symops.com/docs/handlers)
+* Manage [end-users](https://docs.symops.com/docs/manage-users). Sym handles the "happy path" where user emails match across systems automatically. You can use the `symflow` CLI to configure user mappings when required.
 * Iterate on your flow logic. Maybe change things to allow self-approval only for on-call users?
 * Set up another access flow!
 
@@ -103,13 +103,13 @@ The RuntimeConnector module ensures that we use an [external id](https://docs.aw
 
 ## Modules
 
-Your engineers provision resources in both AWS and Sym. The modules are factored to keep the Sym and AWS resources managed independently.
+Your engineers provision resources in both AWS and Sym. The modules are factored to keep the AWS and Sym resources managed independently.
 
 ![Provisioning Flow](docs/SymProvisioningFlow.jpg)
 
-### sym-connectors module
+### sym-aws-connectors module
 
-The [`sym-connectors`](modules/sym-connectors) module contains the AWS resources that Sym flows depend upon.
+The [`sym-aws-connectors`](modules/sym-aws-connectors) module contains the AWS resources that Sym flows depend upon.
 
 ### sym-shared module
 

@@ -6,20 +6,20 @@ provider "sym" {
   org = var.sym_org_slug
 }
 
-# Defines Sym dependencies in AWS
-module "sym_connectors" {
-  source = "../modules/sym-connectors"
+# Defines Sym dependencies that run in your AWS infrastructure
+module "sym_aws_connectors" {
+  source = "../modules/sym-aws-connectors"
 
   tags = var.tags
 }
 
-# Defines Sym shared integrations
+# Defines Sym resources that are shared by all your flows
 module "sym_shared" {
   source = "../modules/sym-shared"
 
   error_logger_prod  = var.error_channel
   okta_org_domain    = var.okta_org_domain
-  runtime_settings   = module.sym_connectors.runtime_settings
+  runtime_settings   = module.sym_aws_connectors.runtime_settings
   slack_workspace_id = var.slack_workspace_id
 }
 

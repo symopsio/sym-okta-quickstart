@@ -11,18 +11,18 @@ variable "connector_environment" {
 }
 
 variable "flow_vars" {
-  description = "Configuration values for the Flow implementation python"
+  description = "Configuration values for the Flow implementation Python"
   type        = map(string)
   default     = {}
 }
 
 variable "okta_org_domain" {
-  description = "Domain of the Okta account to use for this flow. Example: 'my-org.okta.com'"
+  description = "Domain of the Okta account to use for this Flow. Example: 'my-org.okta.com'"
   type        = string
 }
 
 variable "okta_targets" {
-  description = "List of target config objects. Each object has a label and a group_name."
+  description = "List of Okta targets that end-users can request access to. Each object has a label and a group_id."
   type = list(object(
     { label = string, group_id = string }
   ))

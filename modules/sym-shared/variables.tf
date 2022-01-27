@@ -27,7 +27,7 @@ variable "runtime_settings" {
 }
 
 variable "slack_workspace_id" {
-  description = "The Slack Workspace ID to use for your slack integration"
+  description = "The Slack Workspace ID to use for your Slack integration"
   type        = string
 }
 

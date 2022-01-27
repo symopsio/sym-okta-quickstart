@@ -2,10 +2,11 @@ locals {
   flow_name = "okta_access"
 }
 
-# The Okta Access Workflow, which uses the Okta strategy to escalate users.
+# A sym_flow declares a workflow that controls how users can access some group
+# of access targets.
 resource "sym_flow" "this" {
-  name  = local.flow_name
-  label = "Okta Access"
+  name   = local.flow_name
+  labela = "Okta Access"
 
   template = "sym:template:approval:1.0.0"
 
@@ -30,6 +31,8 @@ resource "sym_flow" "this" {
   }
 }
 
+# A sym_strategy declares a list of targets, and a way of granting access to
+# those targets.
 resource "sym_strategy" "this" {
   type = "okta"
 
@@ -38,6 +41,7 @@ resource "sym_strategy" "this" {
   targets        = [for target in var.targets : sym_target.targets[target["group_id"]].id]
 }
 
+# A sym_target declares something that users can request access to.
 resource "sym_target" "targets" {
   for_each = { for target in var.targets : target["group_id"] => target["label"] }
 
