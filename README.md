@@ -4,7 +4,7 @@ A starter template to get an Okta access workflow set up for your team.
 
 ## End-User Experience
 
-End-users will interact with Sym workflows from Slack. Slack connects to the Sym platform, which executes Flows that use the Sym Integrations we wire together in this repo.
+End-users interact with Sym workflows from Slack. Slack connects to the Sym platform, which executes Flows that use the Sym Integrations we wire together in this repo.
 
 ![End-User Workflow](docs/SymEndUserWorkflow.jpg)
 
@@ -59,12 +59,12 @@ $ export AWS_PROFILE=my-profile
 $ cd app && terraform apply
 ```
 
-### Set Up Okta Access
+### Set Up Your Okta API Token
 
 Sym stores your Okta API Token in an AWS Secrets Manager value. Now that you've provisioned infrastructure, its time to get this configured!
 
 1. Use our [setup instructions](https://docs.symops.com/docs/okta) to create an Okta API token that has access to manage your target groups.
-2. Configure the API key in an AWS Secrets Manager secret:
+2. Configure the API key in the AWS Secrets Manager secret configured by your [`sym-connectors`](modules/sym-connectors/main.tf) module:
 
 ```
 $ aws secretsmanager put-secret-value \
@@ -72,21 +72,16 @@ $ aws secretsmanager put-secret-value \
   --secret-string $OKTA_API_TOKEN
 ```
 
-### Enable approvers authorization
-
-You can opt-in to requiring that users must be members of a specific Okta group in order to approve requests. To enable this:
-
-1. Configure `flow_vars.approver_group` with the ID of the Okta group that approvers must be part of in [`terraform.tfvars`](app/terraform.tfvars).
-2. Uncomment the `hook` annotation on the `on_approve` method in [`impl.py`](modules/okta-access-flow/impl.py).
-
-Note: This is just one example of what you can do with [hooks in the SDK!](https://docs.symops.com/docs/handlers)
-
 ### Next Steps
 
 Once you've got the E2E Okta workflow implemented, here are some next steps to consider:
 
 * Set up [reporting](https://docs.symops.com/docs/reporting-overview). Ship audit data to a flexible group of log destinations.
-* Manage [end-users]9https://docs.symops.com/docs/manage-users). Sym tries to handle this automatically but you can use the `symflow` CLI to configure user mappings.
+* Update your workflow to require that users be members of a certain Okta group to approve access:
+  1. Configure `flow_vars.approver_group` with the Okta group ID in [`terraform.tfvars`](app/terraform.tfvars).
+  2. Uncomment the `hook` annotation on the `on_approve` method in [`impl.py`](modules/okta-access-flow/impl.py).
+     this is just one example of what you can do with [hooks in the SDK!](https://docs.symops.com/docs/handlers)
+* Manage [end-users](https://docs.symops.com/docs/manage-users). Sym tries to handle this automatically but you can use the `symflow` CLI to configure user mappings.
 * Iterate on your flow logic. Maybe change things to allow self-approval only for on-call users?
 * Set up another access flow!
 
@@ -124,14 +119,6 @@ The [`sym-shared`](modules/sym-shared) module contains Sym resources that are us
 
 The [`okta-access-flow`](modules/okta-access-flow) module defines the workflow that your engineers will use to get temporary Okta access.
 
-## Symflow CLI
-
-Install the Symflow CLI to authenticate with the Sym Platform:
-
-1. [Install](https://docs.symops.com/docs/install-sym-flow)
-2. [Log In](https://docs.symops.com/docs/login-sym-flow)
-
 ## About Sym
 
 This workflow is just one example of how [Sym Implementers](https://docs.symops.com/docs/deploy-sym-platform) use the [Sym SDK](https://docs.symops.com/docs) to create [Sym Flows](https://docs.symops.com/docs/flows) that use the [Sym Approval](https://docs.symops.com/docs/sym-approval) Template.
-
