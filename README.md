@@ -8,6 +8,14 @@ End-users interact with Sym workflows from Slack. Slack connects to the Sym plat
 
 ![End-User Workflow](docs/SymEndUserWorkflow.jpg)
 
+### Making Requests
+
+![Request Modal](docs/RequestModal.png)
+
+### Approved Requests
+
+![Approval Requests](docs/ApprovalRequests.png)
+
 ## Getting Started
 
 The [app environment](app) includes everything you need to get an Okta workflow up and running. Just configure a few variables in [`terraform.tfvars`](app/terraform.tfvars) and you're on your way!
@@ -31,6 +39,10 @@ Once you've got `symflow` installed, you need to install Sym's slack app into yo
 $ symflow services create --service-type slack --external-id SLACK-EXTERNAL-ID
 ```
 
+Once Slack is set up, try launching the Sym app. You should see a welcome modal like this one, since we haven't set up any flows yet:
+
+![Slack Welcome Modal](docs/SlackWelcome.png)
+
 ### Set Up Your Slack Channels
 
 The workflow is set up to route access requests to the `#sym-requests` channel. You can change this channel in [`terraform.tfvars`](app/terraform.tfvars).
@@ -40,16 +52,9 @@ Sym will also send any errors that happen during a workflow run (due to integrat
 1. Configure `flow_vars.request_channel` if you don't want the default value of `#sym-requests`.
 2. Configure `error_channel` if you don't want the default value of `#sym-errors`.
 
-### Set Up Okta Targets
+### Test Your Provisioning Setup
 
-Identify the initial Okta groups that Sym will move users in and out of. You can always change and modify these groups later, so we recommend starting with an existing group or creating a temporary group for testing.
-
-1. Get the IDs of the Okta groups that you'll be starting with. Configure these in `okta_targets` in [`terraform.tfvars`](app/terraform.tfvars).
-2. Configure your [Okta domain](https://developer.okta.com/docs/guides/find-your-domain/main/) in the `okta_org_domain` variable in [`terraform.tfvars`](app/terraform.tfvars).
-
-### Provision Your Flow
-
-Once you've got all your Terraform variables set up, its time to provision your flow!
+Once you've got Slack set up, its time to provision your flow! Your Okta integration won't be ready quite yet, but we can just make sure all the pipes are connected.
 
 If you plan to provision your flows from a CI pipeline, [we've got you covered](https://docs.symops.com/docs/using-bot-tokens).
 
@@ -59,18 +64,36 @@ $ export AWS_PROFILE=my-profile
 $ cd app && terraform apply
 ```
 
+Once you've provisioned your flow, try to make an access request! You should be able to make the request, but you'll get an error when you try to approve access because we haven't configured Okta yet. Check in your `errors_channel` and you should see something like:
+
+![OktaError](docs/OktaErrorChannel.png)
+
 ### Set Up Your Okta API Token
 
-Sym stores your Okta API Token in an AWS Secrets Manager value. Now that you've provisioned infrastructure, its time to get this configured!
+Sym stores your Okta API Token in an AWS Secrets Manager value. By default, the `sym-runtime` module sets up a shared AWS Secrets Manager secret that you add key/value pairs to for the secrets that your runtime needs to access. Now that you've provisioned infrastructure, its time to get this configured.
 
 1. Use our [setup instructions](https://docs.symops.com/docs/okta) to create an Okta API token that has access to manage your target groups.
-2. Configure the API key in the AWS Secrets Manager secret configured by your [`sym-connectors`](modules/sym-connectors/main.tf) module:
+2. Configure the API key in the AWS Secrets Manager secret configured by your [`sym-runtime`](modules/sym-runtime/main.tf) module:
 
 ```
+$ OKTA_API_TOKEN=<get-from-okta>
 $ aws secretsmanager put-secret-value \
-  --secret-id /symops.com/shared/okta_api_token \
-  --secret-string $OKTA_API_TOKEN
+  --secret-id /symops.com/shared \
+  --secret-string "{\"okta_api_token\": \"$OKTA_API_TOKEN\"}"
 ```
+
+Note that you are free to define your secrets in separate AWS Secret Manager resources if you choose, you'll just need to update where the Okta Access Flow grabs its secret from.
+
+### Set Up Your Okta Targets and Test E2E!
+
+Identify the initial Okta groups that Sym will move users in and out of. You can always change and modify these groups later, so we recommend starting with an existing group or creating a temporary group for testing.
+
+1. Get the IDs of the Okta groups that you'll be starting with. Configure these in `okta_targets` in [`terraform.tfvars`](app/terraform.tfvars).
+2. Configure your [Okta domain](https://developer.okta.com/docs/guides/find-your-domain/main/) in the `okta_org_domain` variable in [`terraform.tfvars`](app/terraform.tfvars).
+
+Now that you've configured Okta targets, its time to reapply your Terraform configs and validate that your integration works end-to-end. Run a `terraform apply` and then request access to your Okta target. Once complete, your request should be approved with no errors:
+
+![Approved Access](docs/ApprovedAccess.png)
 
 ### Next Steps
 
@@ -107,13 +130,9 @@ Your engineers provision resources in both AWS and Sym. The modules are factored
 
 ![Provisioning Flow](docs/SymProvisioningFlow.jpg)
 
-### sym-aws-connectors module
+### sym-runtime module
 
-The [`sym-aws-connectors`](modules/sym-aws-connectors) module contains the AWS resources that Sym flows depend upon.
-
-### sym-shared module
-
-The [`sym-shared`](modules/sym-shared) module contains Sym resources that are useful across multiple different Sym flows.
+The [`sym-runtime`](modules/sym-runtime) creates a shared Runtime that executes all your Flows.
 
 ### okta-access-flow
 

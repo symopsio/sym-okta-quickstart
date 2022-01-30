@@ -6,29 +6,24 @@ provider "sym" {
   org = var.sym_org_slug
 }
 
-# Defines Sym dependencies that run in your AWS infrastructure
-module "sym_aws_connectors" {
-  source = "../modules/sym-aws-connectors"
+# Creates a Sym Runtime that can execute your Flows.
+module "sym_runtime" {
+  source = "../modules/sym-runtime"
 
-  tags = var.tags
-}
-
-# Defines Sym resources that are shared by all your flows
-module "sym_shared" {
-  source = "../modules/sym-shared"
-
-  error_logger_prod  = var.error_channel
-  okta_org_domain    = var.okta_org_domain
-  runtime_settings   = module.sym_aws_connectors.runtime_settings
+  error_channel      = var.error_channel
+  runtime_name       = var.runtime_name
   slack_workspace_id = var.slack_workspace_id
+  sym_account_ids    = var.sym_account_ids
+  tags               = var.tags
 }
 
-# Okta Access flow
+# A Flow that can manage access to a list of Okta target groups.
 module "okta_access_flow" {
   source = "../modules/okta-access-flow"
 
-  flow_vars           = var.flow_vars
-  okta_integration_id = module.sym_shared.okta_integration_id
-  sym_environment_id  = module.sym_shared.prod_environment_id
-  targets             = var.okta_targets
+  flow_vars          = var.flow_vars
+  okta_org_domain    = var.okta_org_domain
+  secrets_settings   = module.sym_runtime.secrets_settings
+  sym_environment_id = module.sym_runtime.prod_environment_id
+  targets            = var.okta_targets
 }

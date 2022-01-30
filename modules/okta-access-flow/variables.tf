@@ -1,15 +1,28 @@
 variable "flow_vars" {
-  description = "Configuration values for the Flow implementation Python"
+  description = "Configuration values for the Flow implementation Python."
   type        = map(string)
 }
 
-variable "okta_integration_id" {
-  description = "ID of the Okta Integration to use for this Flow"
+variable "okta_org_domain" {
+  description = "Domain of the Okta account to use for this flow. Example: 'my-org.okta.com'."
   type        = string
 }
 
+variable "secret_json_key" {
+  description = "Name of the key that maps to the Okta API key within your Secrets Manager Secret."
+  type        = string
+  default     = "okta_api_token"
+}
+
+variable "secrets_settings" {
+  description = "Secrets source and path for shared secret lookups."
+  type = object(
+    { source_id = string, path = string }
+  )
+}
+
 variable "sym_environment_id" {
-  description = "Sym Environment ID for this Flow"
+  description = "ID of the Sym Environment for this Flow."
   type        = string
 }
 
