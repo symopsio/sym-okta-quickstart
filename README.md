@@ -10,15 +10,29 @@ End-users interact with Sym workflows from Slack. Slack connects to the Sym plat
 
 ### Making Requests
 
+First submit a request:
+
 ![Request Modal](docs/RequestModal.png)
 
-### Approved Requests
+Then Sym sends an approval request to the appropriate channel based on your Flow configuration:
 
-![Approval Requests](docs/ApprovalRequests.png)
+![Approval Request](docs/ApprovalRequest.png)
+
+Sym updates Slack once your request is approved:
+
+![Approved Access](docs/ApprovedAccess.png)
 
 ## Getting Started
 
 The [app environment](app) includes everything you need to get an Okta workflow up and running. Just configure a few variables in [`terraform.tfvars`](app/terraform.tfvars) and you're on your way!
+
+- [ ] Set up the `symflow` CLI
+- [ ] Install the Sym Slack App into your workspace
+- [ ] Set Up Your Slack Channels
+- [ ] Test Your Provisioning Setup
+- [ ] Set Up Your Okta API Token
+- [ ] Set Up Your Okta Targets and Test E2E!
+- [ ] Next Steps
 
 ### Set up the `symflow` CLI
 
@@ -66,7 +80,7 @@ $ cd app && terraform apply
 
 Once you've provisioned your flow, try to make an access request! You should be able to make the request, but you'll get an error when you try to approve access because we haven't configured Okta yet. Check in your `errors_channel` and you should see something like:
 
-![OktaError](docs/OktaErrorChannel.png)
+![OktaError](docs/OktaError.png)
 
 ### Set Up Your Okta API Token
 
@@ -91,9 +105,7 @@ Identify the initial Okta groups that Sym will move users in and out of. You can
 1. Get the IDs of the Okta groups that you'll be starting with. Configure these in `okta_targets` in [`terraform.tfvars`](app/terraform.tfvars).
 2. Configure your [Okta domain](https://developer.okta.com/docs/guides/find-your-domain/main/) in the `okta_org_domain` variable in [`terraform.tfvars`](app/terraform.tfvars).
 
-Now that you've configured Okta targets, its time to reapply your Terraform configs and validate that your integration works end-to-end. Run a `terraform apply` and then request access to your Okta target. Once complete, your request should be approved with no errors:
-
-![Approved Access](docs/ApprovedAccess.png)
+Now that you've configured Okta targets, its time to reapply your Terraform configs and validate that your integration works end-to-end. Run a `terraform apply` and then request access to your Okta target. Once complete, your request should be approved with no errors.
 
 ### Next Steps
 
