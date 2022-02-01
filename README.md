@@ -138,7 +138,7 @@ The RuntimeConnector module ensures that we use an [external id](https://docs.aw
 
 ## Modules
 
-Your engineers provision resources in both AWS and Sym. The modules are factored to keep the AWS and Sym resources managed independently.
+Your engineers provision resources in both AWS and Sym. You can mix and match your Terraform resources in whatever way works best for your organization. Our default setup puts shared configurations in the `sym-runtime` module and makes it easy to add new modules for specific Flows.
 
 ![Provisioning Flow](docs/SymProvisioningFlow.jpg)
 
