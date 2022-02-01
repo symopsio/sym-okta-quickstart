@@ -27,15 +27,18 @@
                   environment="web"
                   feedback-link="mailto:sales@symops.io">
     
-      <google-codelab-step label="Welcome" duration="2">
-        <p>Hey! I&#39;m <a href="https://twitter.com/yasyf" target="_blank">Yasyf</a>, CEO at <a href="https://www.symops.com/" target="_blank">Sym</a>.</p>
-<p>Sym helps engineering teams automate security workflows with a sophisticated access management platform that lets you bring audited &amp; automatic just-in-time access to AWS resources, SQL databases, internal apps &amp; dashboards, and a variety external SaaS products. Workflows are provisioned via infra-as-code, often right beside the definitions of the resources they protect, and are easily customizable with our Python SDK.</p>
+      <google-codelab-step label="Welcome" duration="1">
+        <p>Sym helps engineering teams automate security workflows with a sophisticated access management platform that lets you bring audited &amp; automatic just-in-time access to AWS resources, SQL databases, internal apps &amp; dashboards, and a variety external SaaS products. Workflows are provisioned via infra-as-code, often right beside the definitions of the resources they protect, and are easily customizable with our Python SDK.</p>
 <p>If you want to check out a demo, go <a href="https://demo.symops.com/" target="_blank">here</a>!</p>
 <h2 is-upgraded>Workflow</h2>
 <p>Today I want to walk you through setting up a simple access control workflow using Slack, Okta and Sym. By the end of this tutorial, you&#39;ll have the ability to wrap any resource in Okta with a fully-configurable request-and-approval flow, using a declaratively provisioned Slack bot.</p>
 <p>The complete code for this tutorial can be found at <a href="https://github.com/symopsio/sym-okta-quickstart" target="_blank"><code>@symopsio/sym-okta-quickstart</code></a>.</p>
-<h2 is-upgraded>What will it look like?</h2>
-<p>Users will interact with this Sym <code>Flow</code> via Slack. Slack connects to the Sym platform, which executes a <code>Flow</code> that use the <code>Integrations</code> we are wiring together in this tutorial.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="What will it look like?" duration="1">
+        <p>Users will interact with this Sym <code>Flow</code> via Slack. Slack connects to the Sym platform, which executes a <code>Flow</code> that use the <code>Integrations</code> we are wiring together in this tutorial.</p>
 <p class="image-container"><img alt="End-User Workflow" src="img/fbdcfce77de0593b.jpg"></p>
 <h3 is-upgraded>Making Requests</h3>
 <p>This is what a request will look like.</p>
@@ -54,13 +57,13 @@
 <p>The <a href="https://github.com/symopsio/sym-okta-quickstart/tree/main/app" target="_blank">app environment</a> includes everything you need to get an Okta workflow up and running. Just configure a few variables in <a href="https://github.com/symopsio/sym-okta-quickstart/tree/main/app/terraform.tfvars" target="_blank"><code>terraform.tfvars</code></a> and you&#39;re on your way!</p>
 <p>Here&#39;s all that you&#39;ll need to do:</p>
 <ul>
-<li>[ ] Set up the <code>symflow</code> CLI</li>
-<li>[ ] Install the Sym Slack app</li>
-<li>[ ] Configure your Slack channels</li>
-<li>[ ] Test your deploy flow</li>
-<li>[ ] Set up your Okta API token</li>
-<li>[ ] Set up your Okta <code>Targets</code></li>
-<li>[ ] E2E test and more goodies!</li>
+<li>Set up the <code>symflow</code> CLI</li>
+<li>Install the Sym Slack app</li>
+<li>Configure your Slack channels</li>
+<li>Test your deploy flow</li>
+<li>Set up your Okta API token</li>
+<li>Set up your Okta <code>Targets</code></li>
+<li>E2E test and more goodies!</li>
 </ul>
 
 

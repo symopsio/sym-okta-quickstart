@@ -6,9 +6,7 @@ Analytics Account: UA-156651818-3
 # Sym Okta Quickstart Tutorial
 
 ## Welcome
-Duration: 2:00
-
-Hey! I'm [Yasyf](https://twitter.com/yasyf), CEO at [Sym](https://www.symops.com/).
+Duration: 1:00
 
 Sym helps engineering teams automate security workflows with a sophisticated access management platform that lets you bring audited & automatic just-in-time access to AWS resources, SQL databases, internal apps & dashboards, and a variety external SaaS products. Workflows are provisioned via infra-as-code, often right beside the definitions of the resources they protect, and are easily customizable with our Python SDK.
 
@@ -20,8 +18,9 @@ Today I want to walk you through setting up a simple access control workflow usi
 
 The complete code for this tutorial can be found at [`@symopsio/sym-okta-quickstart`](https://github.com/symopsio/sym-okta-quickstart).
 
+## What will it look like?
+Duration: 1:00
 
-### What will it look like?
 Users will interact with this Sym `Flow` via Slack. Slack connects to the Sym platform, which executes a `Flow` that use the `Integrations` we are wiring together in this tutorial.
 
 ![End-User Workflow](img/SymEndUserWorkflow.jpg)
@@ -53,13 +52,13 @@ The [app environment](https://github.com/symopsio/sym-okta-quickstart/tree/main/
 
 Here's all that you'll need to do:
 
-- [ ] Set up the `symflow` CLI
-- [ ] Install the Sym Slack app
-- [ ] Configure your Slack channels
-- [ ] Test your deploy flow
-- [ ] Set up your Okta API token
-- [ ] Set up your Okta `Targets`
-- [ ] E2E test and more goodies!
+- Set up the `symflow` CLI
+- Install the Sym Slack app
+- Configure your Slack channels
+- Test your deploy flow
+- Set up your Okta API token
+- Set up your Okta `Targets`
+- E2E test and more goodies!
 
 ## Set up the `symflow` CLI
 Duration: 3:00
