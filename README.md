@@ -14,7 +14,7 @@ When an End-User approves an escalation request, the Sym Platform does the follo
 2. Grabs the Okta API Token that [you've configured for Sym](https://docs.symops.com/docs/okta) from AWS Secrets Manager.
 3. Adds or removes the user from the appropriate group in Okta.
 
-![Data Flow](img/SymDataFlow.jpg)
+![Data Flow](docsrc/img/SymDataFlow.jpg)
 
 ### Security Considerations
 
@@ -26,7 +26,7 @@ The RuntimeConnector module ensures that we use an [external id](https://docs.aw
 
 Your engineers provision resources in both AWS and Sym. You can mix and match your Terraform resources in whatever way works best for your organization. Our default setup puts shared configurations in the `sym-runtime` module and makes it easy to add new modules for specific Flows.
 
-![Provisioning Flow](img/SymProvisioningFlow.jpg)
+![Provisioning Flow](docsrc/img/SymProvisioningFlow.jpg)
 
 ### sym-runtime module
 
