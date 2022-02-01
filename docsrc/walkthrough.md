@@ -3,7 +3,7 @@ Summary: Sym helps engineering teams automate security workflows with a sophisti
 Feedback Link: mailto:sales@symops.io
 Analytics Account: UA-156651818-3
 
-# Sym Workflows: Infrastructure Access
+# Sym Okta Quickstart Tutorial
 
 ## Welcome
 Duration: 2:00
@@ -32,7 +32,7 @@ This is what a request will look like.
 
 ![Request Modal](img/RequestModal.png)
 
-Sym will send a request for approval to the appropriate users or channel based on your `impl.py`[https://github.com/symopsio/sym-okta-quickstart/blob/main/modules/okta-access-flow/impl.py].
+Sym will send a request for approval to the appropriate users or channel based on your [`impl.py`](https://github.com/symopsio/sym-okta-quickstart/blob/main/modules/okta-access-flow/impl.py).
 
 
 ![Approval Request](img/ApprovalRequest.png)
