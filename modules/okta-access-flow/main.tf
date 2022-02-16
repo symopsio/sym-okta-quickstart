@@ -11,7 +11,7 @@ resource "sym_flow" "this" {
 
   implementation = "${path.module}/impl.py"
 
-  environment_id = var.sym_environment_id
+  environment_id = var.sym_environment.id
 
   vars = var.flow_vars
 

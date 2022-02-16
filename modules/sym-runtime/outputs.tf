@@ -1,11 +1,16 @@
-output "prod_environment_id" {
-  description = "Sym Prod Environment ID"
-  value       = sym_environment.prod.id
+output "prod_environment" {
+  description = "Sym Prod Environment"
+  value       = sym_environment.prod
 }
 
-output "sandbox_environment_id" {
-  description = "Sym Sandbox Environment ID"
-  value       = sym_environment.sandbox.id
+output "runtime_settings" {
+  description = "Sym Runtime Connector settings"
+  value       = sym_integration.runtime_context.settings
+}
+
+output "sandbox_environment" {
+  description = "Sym Sandbox Environment"
+  value       = sym_environment.sandbox
 }
 
 output "secrets_settings" {
