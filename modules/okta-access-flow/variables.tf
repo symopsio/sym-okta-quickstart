@@ -21,9 +21,9 @@ variable "secrets_settings" {
   )
 }
 
-variable "sym_environment_id" {
-  description = "ID of the Sym Environment for this Flow."
-  type        = string
+variable "sym_environment" {
+  description = "Sym Environment for this Flow."
+  type        = object({ id = string, name = string })
 }
 
 variable "targets" {

@@ -21,9 +21,9 @@ module "sym_runtime" {
 module "okta_access_flow" {
   source = "../modules/okta-access-flow"
 
-  flow_vars          = var.flow_vars
-  okta_org_domain    = var.okta_org_domain
-  secrets_settings   = module.sym_runtime.secrets_settings
-  sym_environment_id = module.sym_runtime.prod_environment_id
-  targets            = var.okta_targets
+  flow_vars        = var.flow_vars
+  okta_org_domain  = var.okta_org_domain
+  secrets_settings = module.sym_runtime.secrets_settings
+  sym_environment  = module.sym_runtime.prod_environment
+  targets          = var.okta_targets
 }
