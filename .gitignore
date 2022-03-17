@@ -31,3 +31,6 @@ terraform.rc
 
 # Editors
 .idea
+
+# Sym-specific variable overrides
+sym.auto.tfvars
