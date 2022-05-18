@@ -22,11 +22,17 @@ Sym's Runtime Connector IAM Role has a trust relationship with Sym's production 
 
 The RuntimeConnector module ensures that we use an [external id](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html) when assuming your IAM Role per AWS best practices.
 
-## Modules
+## Repo layout
 
 Your engineers provision resources in both AWS and Sym. You can mix and match your Terraform resources in whatever way works best for your organization. Our default setup puts shared configurations in the `sym-runtime` module and makes it easy to add new modules for specific Flows.
 
 ![Provisioning Flow](docs/SymProvisioningFlow.jpg)
+
+### environments
+
+This repo contains both Terraform environments and modules. Environments represent actual provisioned resources in AWS and Sym. Modules are reusable components that you can parameterize and deploy to multiple environments.
+
+The [prod environment](environments/prod) is where we can iterate on the access workflow logic and test with initial users. Once we've got a setup that we like, we can set up a sandbox environment that we'll use for safe future iteration.
 
 ### sym-runtime module
 

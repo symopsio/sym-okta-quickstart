@@ -1,11 +1,7 @@
-locals {
-  flow_name = "okta_access"
-}
-
 # The Flow that grants users access to Okta targets.
 resource "sym_flow" "this" {
   name  = local.flow_name
-  label = "Okta Access"
+  label = local.flow_label
 
   template = "sym:template:approval:1.0.0"
 
@@ -36,20 +32,20 @@ resource "sym_strategy" "this" {
 
   name           = local.flow_name
   integration_id = sym_integration.okta.id
-  targets        = [for target in var.targets : sym_target.targets[target["group_id"]].id]
+  targets        = [for target in sym_target.targets : target.id]
 }
 
 # The target Okta groups that your Sym Strategy manages access to.
 resource "sym_target" "targets" {
-  for_each = { for target in var.targets : target["group_id"] => target["label"] }
+  for_each = local.targets
 
   type = "okta_group"
 
-  name  = "${local.flow_name}-${each.key}"
-  label = each.value
+  name  = each.key
+  label = each.value["label"]
 
   settings = {
-    group_id = each.key
+    group_id = each.value["group_id"]
   }
 }
 
@@ -71,5 +67,18 @@ resource "sym_integration" "okta" {
 
   settings = {
     api_token_secret = sym_secret.okta_api_key.id
+  }
+}
+
+locals {
+  flow_suffix  = var.sym_environment.name == "prod" ? "" : "_${var.sym_environment.name}"
+  label_suffix = var.sym_environment.name == "prod" ? "" : " [${var.sym_environment.name}]"
+
+  flow_name  = "okta${local.flow_suffix}"
+  flow_label = "Okta${local.label_suffix}"
+
+  targets = {
+    for target in var.targets :
+    format("%s-%s", local.flow_name, target["group_id"]) => target
   }
 }

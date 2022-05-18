@@ -8,7 +8,7 @@ provider "sym" {
 
 # Creates a Sym Runtime that can execute your Flows.
 module "sym_runtime" {
-  source = "../modules/sym-runtime"
+  source = "../../modules/sym-runtime"
 
   error_channel      = var.error_channel
   runtime_name       = var.runtime_name
@@ -19,11 +19,11 @@ module "sym_runtime" {
 
 # A Flow that can manage access to a list of Okta target groups.
 module "okta_access_flow" {
-  source = "../modules/okta-access-flow"
+  source = "../../modules/okta-access-flow"
 
   flow_vars        = var.flow_vars
   okta_org_domain  = var.okta_org_domain
   secrets_settings = module.sym_runtime.secrets_settings
-  sym_environment  = module.sym_runtime.prod_environment
+  sym_environment  = module.sym_runtime.environment
   targets          = var.okta_targets
 }

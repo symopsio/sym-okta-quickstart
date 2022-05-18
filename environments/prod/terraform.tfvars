@@ -2,9 +2,11 @@
 error_channel = "#sym-errors"
 
 flow_vars = {
-  request_channel = "#sym-requests" # Slack Channel where requests should go
+  # Slack Channel where requests should go
+  request_channel = "#sym-requests"
 
-  approver_group = "CHANGEME" # Optional Okta group to enable approvers authz
+  # Optional Okta group to enable approvers authz
+  approver_group = "CHANGEME"
 }
 
 # Domain of the Okta account to use for Sym integrations
@@ -19,7 +21,8 @@ okta_targets = [
   }
 ]
 
-slack_workspace_id = "CHANGEME" # Slack Workspace where Sym is installed
+# Slack Workspace where Sym is installed
+slack_workspace_id = "CHANGEME"
 
 # Your org slug will be provided to you by your Sym onboarding team
 sym_org_slug = "CHANGEME"
