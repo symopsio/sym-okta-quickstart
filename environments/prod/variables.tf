@@ -31,7 +31,7 @@ variable "okta_targets" {
 variable "runtime_name" {
   description = "Name to assign to the Sym Runtime and its associated resources."
   type        = string
-  default     = "shared"
+  default     = "prod"
 }
 
 variable "slack_workspace_id" {
